@@ -154,11 +154,8 @@ static void     Array_setitem(ArrayClass *this, ...)
     va_start(ap, NULL);
     size_t lim = va_arg(ap, size_t);
     Object *add = va_arg(ap, Object *);
-    Class *t = (Class *)add;
-    if (lim > this->_size || !add)
-        return ;
     if (this->_tab[lim])
-        this->_tab[lim] = memcpy(this->_tab[lim], add, t->__size__);
+        this->_tab[lim] = add;
 }
 
 static ArrayClass   _descr = {
