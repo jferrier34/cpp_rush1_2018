@@ -23,6 +23,7 @@ static void Char_ctor(CharClass *this, va_list *args)
 
 static void Char_dtor(CharClass *this)
 {
+    delete(this);
 }
 
 static Object *miltipli(Object *this, Object *other)

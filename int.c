@@ -23,6 +23,7 @@ static void Int_ctor(IntClass *this, va_list *args)
 
 static void Int_dtor(IntClass *this)
 {
+    delete(this);
 }
 
 static Object *addi(Object *this, Object *other)
@@ -82,7 +83,7 @@ static bool eqe(Object *this, Object *other)
 static char const *Printer(IntClass *this)
 {
     char *str = malloc(40);
-    sprintf(str, "<Int (%f)>", this->c);
+    sprintf(str, "<Int (%d)>", this->c);
     return (str);
 }
 

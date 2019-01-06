@@ -18,11 +18,12 @@ typedef struct
 
 static void Float_ctor(FloatClass *this, va_list *args)
 {
-    this->c = va_arg(*args, float);
+    this->c = (float)va_arg(*args, double);
 }
 
 static void Float_dtor(FloatClass *this)
 {
+    delete(this);
 }
 
 static Object *addi(Object *this, Object *other)

@@ -60,7 +60,14 @@ static Object   *ArrayIterator_getval(ArrayIteratorClass *this)
 
 static void     ArrayIterator_setval(ArrayIteratorClass *this, ...)
 {
-    /* Fill this function for exercice 05 */
+    va_list va;
+    va_start(va, NULL);
+    size_t lim = this->_idx;
+    Object *rep = (Object *)va_arg(va, Class *);
+    Object **dump = this->_array->_tab;
+    for(; lim > 0 && *dump; dump++);
+    if (*dump)
+        *dump = rep;
 }
 
 static ArrayIteratorClass   ArrayIteratorDescr = {
@@ -89,29 +96,28 @@ static ArrayIteratorClass   ArrayIteratorDescr = {
 
 static Class    *ArrayIterator = (Class *)&ArrayIteratorDescr;
 
-typedef struct
-{
-    Container   base;
-    Class       *_type;
-    size_t      _size;
-    Object      **_tab;
-}   ArrayClass;
-
 static void     Array_ctor(ArrayClass *this, va_list *args)
 {
-    this->size = va_arg(*args, size_t);
+    size_t i = 0;
+    this->_size = va_arg(*args, size_t);
     this->_type = va_arg(*args, Class *);
-    this->tab = malloc(sizeof(this->_type) * this->_size);
-    Object *dump = new(this->_type, va_arg(*args, this->type));
-    for (size_t i = 0; i < this->_size; i++)
-        this->tab[i] = dump;
+    this->_tab = (Object **)malloc(sizeof(Class *) * (this->_size + 1));
+    Object *dump = new(this->_type, va_arg(*args, Class *));
+    for (; i < this->_size; i++){
+        this->_tab[i] = (Object *)malloc(sizeof(Class));
+        if (this->_tab[i] == NULL)
+            raise("Out of memory");
+        this->_tab[i] = dump;
+        printf("%d\n", i);
+    }
+    this->_tab[i] = NULL;
 }
 
 static void     Array_dtor(ArrayClass *this)
 {
     for (unsigned int i = 0; i < this->_size; i++)
         delete(this->_tab[i]);
-    free(this->_tab);
+    delete(this->_tab);
 }
 
 static size_t   Array_len(ArrayClass *this)
@@ -132,15 +138,21 @@ static Iterator *Array_end(ArrayClass *this)
 static Object   *Array_getitem(ArrayClass *this, ...)
 {
     va_list ap;
-    va_start(ap,)
-    Object **dump = this->tab;
-    int lim = va_arg(ap, size_t);
-    for (; )
+    va_start(ap, NULL);
+    size_t lim = va_arg(ap, size_t);
+    if (this->_tab[lim])
+        return (this->_tab[lim]);
+    return (NULL);
 }
 
 static void     Array_setitem(ArrayClass *this, ...)
 {
-    /* Fill this function for exercice 05 */
+    va_list ap;
+    va_start(ap, NULL);
+    size_t lim = va_arg(ap, size_t);
+    Object *add = va_arg(ap, Object *);
+    if (this->_tab[lim])
+        this->_tab[lim] = add;
 }
 
 static ArrayClass   _descr = {
