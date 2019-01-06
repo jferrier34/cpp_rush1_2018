@@ -11,7 +11,7 @@
 
 int         main(void)
 {
-    Object  *player = new(Player);
+    Object  *player = new(NULL);
 
     delete(player);
     return (0);
