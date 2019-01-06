@@ -6,37 +6,38 @@
 */
 
 #include <stdio.h>
-#include "point.h"
+#include "vertex.h"
 
 typedef struct
 {
     Class   base;
-    int     x, y;
-}   PointClass;
+    int     x, y, z;
+}   VertexClass;
 
-static void Point_ctor(PointClass *this, va_list *args)
+static void Vertex_ctor(VertexClass *this, va_list *args)
 {
     this->x = va_arg(*args, int);
     this->y = va_arg(*args, int);
+    this->z = va_arg(*args, int);
 }
 
-static void Point_dtor(PointClass *this)
+static void Vertex_dtor(VertexClass *this)
 {
 }
 
-static char const *Printer(PointClass *this)
+static char const *Printer(VertexClass *this)
 {
     char *str = malloc(40);
-    sprintf(str, "<Point (%d, %d)>", this->x, this->y);
+    sprintf(str, "<Vertex (%d, %d, %d)>", this->x, this->y, this->z);
     return (str);
 }
 
-static PointClass _description = {
+static VertexClass _description = {
     {   /* Class struct */
-        .__size__ = sizeof(PointClass),
-        .__name__ = "Point",
-        .__ctor__ = (ctor_t)&Point_ctor,
-        .__dtor__ = (dtor_t)&Point_dtor,
+        .__size__ = sizeof(VertexClass),
+        .__name__ = "Vertex",
+        .__ctor__ = (ctor_t)&Vertex_ctor,
+        .__dtor__ = (dtor_t)&Vertex_dtor,
         .__str__ = (to_string_t)&Printer,
         .__add__ = NULL,    /* Implement this method for exercice 03 */
         .__sub__ = NULL,    /* Implement this method for exercice 03 */
@@ -50,4 +51,4 @@ static PointClass _description = {
     .y = 0
 };
 
-Class   *Point = (Class *)&_description;
+Class   *Vertex = (Class *)&_description;
