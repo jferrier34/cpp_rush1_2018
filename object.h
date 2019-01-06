@@ -37,7 +37,7 @@ typedef struct {
 
 # define str(o)                 (((Class *)o)->__str__ != NULL ? ((Class *)o)->__str__(o) : ((Class *)o)->__name__)
 # define addition(a, b)         ((Class *)a)->__add__(a, b)
-# define subtraction(a, b)      ((Class *)a)->__sub__(a, b)
+# define substraction(a, b)      ((Class *)a)->__sub__(a, b)
 # define multiplication(a, b)   ((Class *)a)->__mul__(a, b)
 # define division(a, b)         ((Class *)a)->__div__(a, b)
 # define eq(a, b)               ((Class *)a)->__eq__(a, b)

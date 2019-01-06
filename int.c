@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "int.h"
 #include "new.h"
+#include "object.h"
 
 typedef struct
 {
@@ -57,25 +58,25 @@ static Object *divisio(Object *this, Object *other)
     return (ret);
 }
 
-static Object *gte(Object *this, Object *other)
+static bool gte(Object *this, Object *other)
 {
     if (((IntClass *)this)->c > ((IntClass *)other)->c)
-        return (this);
-    return (NULL);
+        return (true);
+    return (false);
 }
 
-static Object *lte(Object *this, Object *other)
+static bool lte(Object *this, Object *other)
 {
     if (((IntClass *)this)->c < ((IntClass *)other)->c)
-        return (this);
-    return (NULL);
+        return (true);
+    return (false);
 }
 
-static Object *eqe(Object *this, Object *other)
+static bool eqe(Object *this, Object *other)
 {
     if (((IntClass *)this)->c == ((IntClass *)other)->c)
-        return (this);
-    return (NULL);
+        return (true);
+    return (false);
 }
 
 static char const *Printer(IntClass *this)
@@ -96,9 +97,9 @@ static IntClass _description = {
         .__sub__ = (binary_operator_t)&sousi,
         .__mul__ = (binary_operator_t)&miltipli,
         .__div__ = (binary_operator_t)&divisio,
-        .__eq__ = (binary_operator_t)&eqe,
-        .__gt__ = (binary_operator_t)&gte,
-        .__lt__ = (binary_operator_t)&lte
+        .__eq__ = (binary_comparator_t)&eqe,
+        .__gt__ = (binary_comparator_t)&gte,
+        .__lt__ = (binary_comparator_t)&lte
     },
     .c = 0
 };
