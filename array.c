@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 #include "raise.h"
 #include "array.h"
 #include "new.h"
@@ -55,6 +56,7 @@ static Object   *ArrayIterator_getval(ArrayIteratorClass *this)
 {
     if (this->_idx >= this->_array->_size)
         raise("Out of range");
+    printf("%p\n", this->_array->_tab[this->_idx]);
     return (this->_array->_tab[this->_idx]);
 }
 
@@ -101,14 +103,15 @@ static void     Array_ctor(ArrayClass *this, va_list *args)
     size_t i = 0;
     this->_size = va_arg(*args, size_t);
     this->_type = va_arg(*args, Class *);
-    this->_tab = (Object **)malloc(sizeof(Class *) * (this->_size + 1));
+    this->_tab = (Object **)malloc(sizeof(Object *) * (this->_size + 1));
     Object *dump = new(this->_type, va_arg(*args, Class *));
+    Class *t = (Class *)dump;
     for (; i < this->_size; i++){
-        this->_tab[i] = (Object *)malloc(sizeof(Class));
+        this->_tab[i] = (Object *)malloc(t->__size__);
         if (this->_tab[i] == NULL)
             raise("Out of memory");
-        this->_tab[i] = dump;
-        printf("%d\n", i);
+        this->_tab[i] = memcpy(this->_tab[i], dump, t->__size__);
+
     }
     this->_tab[i] = NULL;
 }
@@ -151,8 +154,11 @@ static void     Array_setitem(ArrayClass *this, ...)
     va_start(ap, NULL);
     size_t lim = va_arg(ap, size_t);
     Object *add = va_arg(ap, Object *);
+    Class *t = (Class *)add;
+    if (lim > this->_size || !add)
+        return ;
     if (this->_tab[lim])
-        this->_tab[lim] = add;
+        this->_tab[lim] = memcpy(this->_tab[lim], add, t->__size__);
 }
 
 static ArrayClass   _descr = {
