@@ -40,8 +40,10 @@ Object 		*va_new(Class *class, va_list *ap)
 
 void 		delete(Object *class)
 {
-	if (!class)
+	if (!class){
 		raise("You otha brotha can't deny\n");
+		return ;
+	}
 	else{
 		((Class *)class)->__dtor__(class);
 		free(class);
