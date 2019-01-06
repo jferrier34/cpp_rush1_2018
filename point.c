@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include "point.h"
+#include "new.h"
 
 typedef struct
 {
@@ -24,6 +25,22 @@ static void Point_dtor(PointClass *this)
 {
 }
 
+static Object *additio(Object *this, Object *other)
+{
+    PointClass *ret = new(Point, ((PointClass *)this)->x +
+     ((PointClass *)other)->x, ((PointClass *)this)->y +
+      ((PointClass *)other)->y);
+    return (ret);
+}
+
+static Object *substractio(Object *this, Object *other)
+{
+    PointClass *ret = new(Point, ((PointClass *)this)->x -
+     ((PointClass *)other)->x, ((PointClass *)this)->y -
+      ((PointClass *)other)->y);
+    return (ret);
+}
+
 static char const *Printer(PointClass *this)
 {
     char *str = malloc(40);
@@ -38,8 +55,8 @@ static PointClass _description = {
         .__ctor__ = (ctor_t)&Point_ctor,
         .__dtor__ = (dtor_t)&Point_dtor,
         .__str__ = (to_string_t)&Printer,
-        .__add__ = NULL,    /* Implement this method for exercice 03 */
-        .__sub__ = NULL,    /* Implement this method for exercice 03 */
+        .__add__ = (binary_operator_t)&additio,
+        .__sub__ = (binary_operator_t)&substractio,
         .__mul__ = NULL,
         .__div__ = NULL,
         .__eq__ = NULL,

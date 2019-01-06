@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include "vertex.h"
+#include "new.h"
 
 typedef struct
 {
@@ -25,6 +26,24 @@ static void Vertex_dtor(VertexClass *this)
 {
 }
 
+static Object *additio(Object *this, Object *other)
+{
+    VertexClass *ret = new(Vertex, ((VertexClass *)this)->x +
+     ((VertexClass *)other)->x, ((VertexClass *)this)->y +
+      ((VertexClass *)other)->y, ((VertexClass *)this)->z +
+      ((VertexClass *)other)->z);
+    return (ret);
+}
+
+static Object *substractio(Object *this, Object *other)
+{
+    VertexClass *ret = new(Vertex, ((VertexClass *)this)->x -
+     ((VertexClass *)other)->x, ((VertexClass *)this)->y -
+      ((VertexClass *)other)->y, ((VertexClass *)this)->z -
+      ((VertexClass *)other)->z);
+    return (ret);
+}
+
 static char const *Printer(VertexClass *this)
 {
     char *str = malloc(40);
@@ -39,8 +58,8 @@ static VertexClass _description = {
         .__ctor__ = (ctor_t)&Vertex_ctor,
         .__dtor__ = (dtor_t)&Vertex_dtor,
         .__str__ = (to_string_t)&Printer,
-        .__add__ = NULL,    /* Implement this method for exercice 03 */
-        .__sub__ = NULL,    /* Implement this method for exercice 03 */
+        .__add__ = (binary_operator_t)&additio,
+        .__sub__ = (binary_operator_t)&substractio,
         .__mul__ = NULL,
         .__div__ = NULL,
         .__eq__ = NULL,
