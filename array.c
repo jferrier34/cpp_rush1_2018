@@ -89,9 +89,22 @@ static ArrayIteratorClass   ArrayIteratorDescr = {
 
 static Class    *ArrayIterator = (Class *)&ArrayIteratorDescr;
 
+typedef struct
+{
+    Container   base;
+    Class       *_type;
+    size_t      _size;
+    Object      **_tab;
+}   ArrayClass;
+
 static void     Array_ctor(ArrayClass *this, va_list *args)
 {
-    /* Fill this function for exercice 05 */
+    this->size = va_arg(*args, size_t);
+    this->_type = va_arg(*args, Class *);
+    this->tab = malloc(sizeof(this->_type) * this->_size);
+    Object *dump = new(this->_type, va_arg(*args, this->type));
+    for (size_t i = 0; i < this->_size; i++)
+        this->tab[i] = dump;
 }
 
 static void     Array_dtor(ArrayClass *this)
@@ -118,7 +131,11 @@ static Iterator *Array_end(ArrayClass *this)
 
 static Object   *Array_getitem(ArrayClass *this, ...)
 {
-    /* Fill this function for exercice 05 */
+    va_list ap;
+    va_start(ap,)
+    Object **dump = this->tab;
+    int lim = va_arg(ap, size_t);
+    for (; )
 }
 
 static void     Array_setitem(ArrayClass *this, ...)
