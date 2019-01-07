@@ -32,17 +32,20 @@ static void     ArrayIterator_ctor(ArrayIteratorClass *this, va_list *args)
     this->_idx = va_arg(*args, int);
 }
 
-static bool     ArrayIterator_eq(ArrayIteratorClass *this, ArrayIteratorClass *other)
+static bool     ArrayIterator_eq(ArrayIteratorClass *this,
+                                 ArrayIteratorClass *other)
 {
     return (this->_idx == other->_idx);
 }
 
-static bool     ArrayIterator_gt(ArrayIteratorClass *this, ArrayIteratorClass *other)
+static bool     ArrayIterator_gt(ArrayIteratorClass *this,
+                                 ArrayIteratorClass *other)
 {
     return (this->_idx > other->_idx);
 }
 
-static bool     ArrayIterator_lt(ArrayIteratorClass *this, ArrayIteratorClass *other)
+static bool     ArrayIterator_lt(ArrayIteratorClass *this,
+                                 ArrayIteratorClass *other)
 {
     return (this->_idx < other->_idx);
 }
@@ -67,7 +70,7 @@ static void     ArrayIterator_setval(ArrayIteratorClass *this, ...)
     size_t lim = this->_idx;
     Object *rep = (Object *)va_arg(va, Class *);
     Object **dump = this->_array->_tab;
-    for(; lim > 0 && *dump; dump++);
+    for (; lim > 0 && *dump; dump++);
     if (*dump)
         *dump = rep;
 }
