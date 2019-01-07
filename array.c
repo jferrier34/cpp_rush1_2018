@@ -32,20 +32,22 @@ static void     ArrayIterator_ctor(ArrayIteratorClass *this, va_list *args)
     this->_idx = va_arg(*args, int);
 }
 
-static bool     ArrayIterator_eq(ArrayIteratorClass *this,
-                                 ArrayIteratorClass *other)
+static void     ArrayIterator_dtor(ArrayIteratorClass *this)
+{
+    this->_array = NULL;
+}
+
+static bool     ArrayIterator_eq(ArrayIteratorClass *this, ArrayIteratorClass *other)
 {
     return (this->_idx == other->_idx);
 }
 
-static bool     ArrayIterator_gt(ArrayIteratorClass *this,
-                                 ArrayIteratorClass *other)
+static bool     ArrayIterator_gt(ArrayIteratorClass *this, ArrayIteratorClass *other)
 {
     return (this->_idx > other->_idx);
 }
 
-static bool     ArrayIterator_lt(ArrayIteratorClass *this,
-                                 ArrayIteratorClass *other)
+static bool     ArrayIterator_lt(ArrayIteratorClass *this, ArrayIteratorClass *other)
 {
     return (this->_idx < other->_idx);
 }
@@ -70,7 +72,7 @@ static void     ArrayIterator_setval(ArrayIteratorClass *this, ...)
     size_t lim = this->_idx;
     Object *rep = (Object *)va_arg(va, Class *);
     Object **dump = this->_array->_tab;
-    for (; lim > 0 && *dump; dump++);
+    for(; lim > 0 && *dump; dump++);
     if (*dump)
         *dump = rep;
 }
@@ -81,7 +83,7 @@ static ArrayIteratorClass   ArrayIteratorDescr = {
             .__size__ = sizeof(ArrayIteratorClass),
             .__name__ = "ArrayIterator",
             .__ctor__ = (ctor_t)&ArrayIterator_ctor,
-            .__dtor__ = NULL,
+            .__dtor__ = (dtor_t)&ArrayIterator_dtor,
             .__str__ = NULL,
             .__add__ = NULL,
             .__sub__ = NULL,
@@ -122,8 +124,8 @@ static void     Array_ctor(ArrayClass *this, va_list *args)
 static void     Array_dtor(ArrayClass *this)
 {
     for (unsigned int i = 0; i < this->_size; i++)
-        delete(this->_tab[i]);
-    delete(this->_tab);
+        free(this->_tab[i]);
+    free(this->_tab);
 }
 
 static size_t   Array_len(ArrayClass *this)
@@ -156,9 +158,10 @@ static void     Array_setitem(ArrayClass *this, ...)
     va_list ap;
     va_start(ap, NULL);
     size_t lim = va_arg(ap, size_t);
-    Object *add = va_arg(ap, Object *);
-    if (this->_tab[lim])
-        this->_tab[lim] = add;
+    Object *add = new(this->_type, va_arg(ap, Class *));
+    if (lim > this->_size)
+        return ;
+    this->_tab[lim] = add;
 }
 
 static ArrayClass   _descr = {
