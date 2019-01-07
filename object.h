@@ -35,7 +35,7 @@ typedef struct {
     binary_comparator_t __lt__;     // ex04
 }   Class;
 
-# define str(o)                 (((Class *)o)->__str__ != NULL ? ((Class *)o)->__str__(o) : ((Class *)o)->__name__)
+# define str(o) (((Class *)o)->__str__ != NULL ? ((Class *)o)->__str__(o) :((Class *)o)->__name__)
 # define addition(a, b)         ((Class *)a)->__add__(a, b)
 # define substraction(a, b)      ((Class *)a)->__sub__(a, b)
 # define multiplication(a, b)   ((Class *)a)->__mul__(a, b)

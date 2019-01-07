@@ -28,16 +28,16 @@ static void Point_dtor(PointClass *this)
 static Object *additio(Object *this, Object *other)
 {
     PointClass *ret = new(Point, ((PointClass *)this)->x +
-     ((PointClass *)other)->x, ((PointClass *)this)->y +
-      ((PointClass *)other)->y);
+    ((PointClass *)other)->x, ((PointClass *)this)->y +
+    ((PointClass *)other)->y);
     return (ret);
 }
 
 static Object *substractio(Object *this, Object *other)
 {
     PointClass *ret = new(Point, ((PointClass *)this)->x -
-     ((PointClass *)other)->x, ((PointClass *)this)->y -
-      ((PointClass *)other)->y);
+    ((PointClass *)other)->x, ((PointClass *)this)->y -
+    ((PointClass *)other)->y);
     return (ret);
 }
 
@@ -49,7 +49,7 @@ static char const *Printer(PointClass *this)
 }
 
 static PointClass _description = {
-    {   /* Class struct */
+    {
         .__size__ = sizeof(PointClass),
         .__name__ = "Point",
         .__ctor__ = (ctor_t)&Point_ctor,

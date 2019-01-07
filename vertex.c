@@ -30,19 +30,19 @@ static void Vertex_dtor(VertexClass *this)
 static Object *additio(Object *this, Object *other)
 {
         VertexClass *ret = new(Vertex, ((VertexClass *)this)->x +
-                               ((VertexClass *)other)->x, ((VertexClass *)this)->y +
-                               ((VertexClass *)other)->y, ((VertexClass *)this)->z +
-                               ((VertexClass *)other)->z);
+        ((VertexClass *)other)->x, ((VertexClass *)this)->y +
+        ((VertexClass *)other)->y, ((VertexClass *)this)->z +
+        ((VertexClass *)other)->z);
         return (ret);
 }
 
 static Object *substractio(Object *this, Object *other)
 {
         VertexClass *ret = new(Vertex,
-                               ((VertexClass *)this)->x -
-                               ((VertexClass *)other)->x, ((VertexClass *)this)->y -
-                               ((VertexClass *)other)->y, ((VertexClass *)this)->z -
-                               ((VertexClass *)other)->z);
+        ((VertexClass *)this)->x -
+        ((VertexClass *)other)->x, ((VertexClass *)this)->y -
+        ((VertexClass *)other)->y, ((VertexClass *)this)->z -
+        ((VertexClass *)other)->z);
         return (ret);
 }
 
@@ -55,7 +55,7 @@ static char const *Printer(VertexClass *this)
 }
 
 static VertexClass _description = {
-        {   /* Class struct */
+        {
                 .__size__ = sizeof(VertexClass),
                 .__name__ = "Vertex",
                 .__ctor__ = (ctor_t)&Vertex_ctor,

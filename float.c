@@ -29,21 +29,21 @@ static void Float_dtor(FloatClass *this)
 static Object *addi(Object *this, Object *other)
 {
     FloatClass *ret = new(Float, ((FloatClass *)this)->c +
-     ((FloatClass *)other)->c);
+    ((FloatClass *)other)->c);
     return (ret);
 }
 
 static Object *sousi(Object *this, Object *other)
 {
     FloatClass *ret = new(Float, ((FloatClass *)this)->c -
-     ((FloatClass *)other)->c);
+    ((FloatClass *)other)->c);
     return (ret);
 }
 
 static Object *miltipli(Object *this, Object *other)
 {
     FloatClass *ret = new(Float, ((FloatClass *)this)->c *
-     ((FloatClass *)other)->c);
+    ((FloatClass *)other)->c);
     return (ret);
 }
 
@@ -55,7 +55,7 @@ static Object *divisio(Object *this, Object *other)
         return (ret);
     }
     FloatClass *ret = new(Float, ((FloatClass *)this)->c /
-     ((FloatClass *)other)->c);
+    ((FloatClass *)other)->c);
     return (ret);
 }
 
@@ -89,7 +89,7 @@ static char const *Printer(FloatClass *this)
 }
 
 static FloatClass _description = {
-    {   /* Class struct */
+    {
         .__size__ = sizeof(FloatClass),
         .__name__ = "Float",
         .__ctor__ = (ctor_t)&Float_ctor,

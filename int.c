@@ -29,21 +29,21 @@ static void Int_dtor(IntClass *this)
 static Object *addi(Object *this, Object *other)
 {
     IntClass *ret = new(Int, ((IntClass *)this)->c +
-     ((IntClass *)other)->c);
+    ((IntClass *)other)->c);
     return (ret);
 }
 
 static Object *sousi(Object *this, Object *other)
 {
     IntClass *ret = new(Int, ((IntClass *)this)->c -
-     ((IntClass *)other)->c);
+    ((IntClass *)other)->c);
     return (ret);
 }
 
 static Object *miltipli(Object *this, Object *other)
 {
     IntClass *ret = new(Int, ((IntClass *)this)->c *
-     ((IntClass *)other)->c);
+    ((IntClass *)other)->c);
     return (ret);
 }
 
@@ -55,7 +55,7 @@ static Object *divisio(Object *this, Object *other)
         return (ret);
     }
     IntClass *ret = new(Int, ((IntClass *)this)->c /
-     ((IntClass *)other)->c);
+    ((IntClass *)other)->c);
     return (ret);
 }
 
@@ -88,7 +88,7 @@ static char const *Printer(IntClass *this)
 }
 
 static IntClass _description = {
-    {   /* Class struct */
+    {
         .__size__ = sizeof(IntClass),
         .__name__ = "Int",
         .__ctor__ = (ctor_t)&Int_ctor,

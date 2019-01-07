@@ -23,28 +23,28 @@ static void Char_ctor(CharClass *this, va_list *args)
 
 static void Char_dtor(CharClass *this)
 {
-        this->c = 0;
+    this->c = 0;
 }
 
 static Object *miltipli(Object *this, Object *other)
 {
     CharClass *ret = new(Char, ((CharClass *)this)->c *
-     ((CharClass *)other)->c);
+    ((CharClass *)other)->c);
     return (ret);
 }
 
 static Object *addi(Object *this, Object *other)
 {
     CharClass *ret = new(Char, ((CharClass *)this)->c +
-     ((CharClass *)other)->c);
+        ((CharClass *)other)->c);
     return (ret);
 }
 
 static Object *sousi(Object *this, Object *other)
 {
-    CharClass *ret = new(Char, ((CharClass *)this)->c -
-     ((CharClass *)other)->c);
-    return (ret);
+        CharClass *ret = new(Char, ((CharClass *)this)->c -
+        ((CharClass *)other)->c);
+        return (ret);
 }
 
 static Object *divisio(Object *this, Object *other)
@@ -55,7 +55,7 @@ static Object *divisio(Object *this, Object *other)
         return (ret);
     }
     CharClass *ret = new(Char, ((CharClass *)this)->c /
-     ((CharClass *)other)->c);
+    ((CharClass *)other)->c);
     return (ret);
 }
 
@@ -88,7 +88,7 @@ static char const *Printer(CharClass *this)
 }
 
 static CharClass _description = {
-    {   /* Class struct */
+    {
         .__size__ = sizeof(CharClass),
         .__name__ = "Char",
         .__ctor__ = (ctor_t)&Char_ctor,

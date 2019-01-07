@@ -21,7 +21,6 @@ static void Player_ctor(PlayerClass *this, va_list *args)
 {
     (void)args;
 
-    // Initialize internal resources
     this->identifier = strdup("Kreog");
     this->power = rand() % 42;
 
@@ -30,14 +29,13 @@ static void Player_ctor(PlayerClass *this, va_list *args)
 
 static void Player_dtor(PlayerClass *this)
 {
-    // Release internal resources
     free(this->identifier);
 
     printf("~Player()\n");
 }
 
 static PlayerClass _description = {
-    {   /* Class struct */
+    {
         .__size__ = sizeof(PlayerClass),
         .__name__ = "Player",
         .__ctor__ = (ctor_t)&Player_ctor,
